@@ -15,7 +15,7 @@ blueprint:
     - Only run the motion off action if an optional entity is in desired state\n"
 
   domain: automation
-  source_url: https://gist.github.com/brigger/
+  source_url: https://github.com/brigger/HomeAssistant_Blueprints/blob/main/advanced_custom_motion_sensor.yaml
   input:
     motion_entity:
       name: Motion Sensor
