@@ -22,7 +22,7 @@ blueprint:
       description: Motion Sensor or a group with Motion Sensors (But can be anything switching between "on" and "off")
       selector:
         entity:
-          multiple: true
+          multiple: false
     light_target:
       name: Light
       selector:
