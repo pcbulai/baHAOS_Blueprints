@@ -248,6 +248,4 @@ action:
             default:
               - service: light.turn_off
                 target: !input light_target
-
-
-Message malformed: Entity IDs cannot be None for dictionary value @ data['actions'][0]['choose'][0]['conditions'][1]['entity_id']
+                
