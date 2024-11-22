@@ -29,6 +29,12 @@ blueprint:
         target:
           entity:
             domain: light
+    scene_target:
+      name: Scene
+      selector:
+        target:
+          entity:
+            domain: scene
     luminance_sensor:
       name: Illuminance sensor
       description: This sensor will be used to determine the illumination.
@@ -201,8 +207,8 @@ action:
           - condition: time
             after: !input time_default_start
             before: !input time_default_end
-          - service: light.turn_on
-            target: !input light_target
+          - service: scene.turn_on
+            target: !input scene_target
       - conditions:
           - condition: template
             value_template: "{{ trigger.to_state.state == 'off' }}"
