@@ -150,7 +150,7 @@ mode: restart
 max_exceeded: silent
 variables:
   scene_ambient: !input scene_ambient
-  scene_target: !input scene_target.entity_id
+  scene_target: !input scene_target
   no_motion_wait: !input no_motion_wait
   automation_blocker: !input automation_blocker
   automation_blocker_boolean: !input automation_blocker_boolean
@@ -248,4 +248,3 @@ action:
             default:
               - service: light.turn_off
                 target: !input light_target
-                
