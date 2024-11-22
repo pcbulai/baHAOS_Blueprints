@@ -173,18 +173,20 @@ trigger:
     for: !input no_motion_wait
 condition:
   - condition: template
-    value_template: |
-      {% set sceneUTCTimestamp = states(scene_target.entity_id) %}
-      {% set nowUTCTimestamp = utcnow() %}
-
-      {% set sceneDateTime = as_datetime(sceneUTCTimestamp) %}
-      {% set nowDateTime = as_datetime(nowUTCTimestamp) %}
-
-      {% if (nowDateTime - sceneDateTime).total_seconds() | int < no_motion_wait %}
-        false
+    value_template: >
+      {% set scene_target_state = states(scene_target) %}
+      {% if scene_target_state is not none %}
+        {% set sceneDateTime = as_datetime(scene_target_state) %}
+        {% set nowDateTime = utcnow() %}
+        {% if sceneDateTime is not none and (nowDateTime - sceneDateTime).total_seconds() | int < no_motion_wait %}
+          false
+        {% else %}
+          true
+        {% endif %}
       {% else %}
         true
       {% endif %}
+
   - condition: or
     conditions:
       - "{{ automation_blocker == none }}"
