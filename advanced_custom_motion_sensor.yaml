@@ -15,7 +15,7 @@ blueprint:
     - Only run the motion off action if an optional entity is in desired state\n"
 
   domain: automation
-  source_url: https://github.com/pcbulai/baHAOS_Blueprints/blob/main/advanced_custom_motion_sensor.yaml
+  source_url: https://github.com/brigger/HomeAssistant_Blueprints/blob/main/advanced_custom_motion_sensor.yaml
   input:
     motion_entity:
       name: Motion Sensor
@@ -174,7 +174,7 @@ trigger:
 condition:
   - condition: template
     value_template: |
-      {% set sceneUTCTimestamp = states(scene_target) %}
+      {% set sceneUTCTimestamp = states(scene_target.entity_id) %}
       {% set nowUTCTimestamp = utcnow() %}
 
       {% set sceneDateTime = as_datetime(sceneUTCTimestamp) %}
