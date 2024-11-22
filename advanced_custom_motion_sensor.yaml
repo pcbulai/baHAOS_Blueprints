@@ -15,7 +15,7 @@ blueprint:
     - Only run the motion off action if an optional entity is in desired state\n"
 
   domain: automation
-  source_url: https://github.com/brigger/HomeAssistant_Blueprints/blob/main/advanced_custom_motion_sensor.yaml
+  source_url: https://github.com/pcbulai/baHAOS_Blueprints/blob/main/advanced_custom_motion_sensor.yaml
   input:
     motion_entity:
       name: Motion Sensor
@@ -150,6 +150,8 @@ mode: restart
 max_exceeded: silent
 variables:
   scene_ambient: !input scene_ambient
+  scene_target: !input scene_target
+  no_motion_wait: !input no_motion_wait
   automation_blocker: !input automation_blocker
   automation_blocker_boolean: !input automation_blocker_boolean
   motion_off_blocker: !input motion_off_blocker
@@ -170,6 +172,19 @@ trigger:
     to: "off"
     for: !input no_motion_wait
 condition:
+  - condition: template
+    value_template: |
+      {% set sceneUTCTimestamp = states(scene_target) %}
+      {% set nowUTCTimestamp = utcnow() %}
+
+      {% set sceneDateTime = as_datetime(sceneUTCTimestamp) %}
+      {% set nowDateTime = as_datetime(nowUTCTimestamp) %}
+
+      {% if (nowDateTime - sceneDateTime).total_seconds() | int < no_motion_wait %}
+        false
+      {% else %}
+        true
+      {% endif %}
   - condition: or
     conditions:
       - "{{ automation_blocker == none }}"
@@ -231,3 +246,6 @@ action:
             default:
               - service: light.turn_off
                 target: !input light_target
+
+
+Message malformed: Entity IDs cannot be None for dictionary value @ data['actions'][0]['choose'][0]['conditions'][1]['entity_id']
